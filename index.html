@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Fete of Ravenswood Bluff - ST Helper</title>
+    <!-- STREAMING_CHUNK:Refining UI for player cards... -->
+    <style>
+        :root {
+            --bg-color: #1a1a24;
+            --card-bg: #252538;
+            --text-color: #f0f0f5;
+            --accent-color: #ffd700;
+            --townsfolk: #2ecc71;
+            --outsider: #3498db;
+            --minion: #e74c3c;
+            --demon: #9b59b6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #3d3d5c;
+            padding-bottom: 10px;
+        }
+
+        h1 { margin: 0; color: var(--accent-color); font-size: 2rem; }
+        p.author { margin: 5px 0 0 0; font-style: italic; color: #a0a0c0; }
+
+        .container {
+            display: grid;
+            grid-template-columns: 320px 1fr 300px;
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            align-items: start;
+        }
+
+        @media (max-width: 1100px) {
+            .container { grid-template-columns: 1fr; }
+        }
+
+        .panel {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #3d3d5c;
+            margin-bottom: 20px;
+        }
+
+        .panel h2 { margin-top: 0; color: var(--accent-color); font-size: 1.3rem; }
+
+        .form-group { margin-bottom: 15px; }
+
+        label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9rem; }
+
+        select, input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #1a1a24;
+            color: white;
+            border: 1px solid #4d4d75;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        button.btn {
+            background-color: var(--accent-color);
+            color: #1a1a24;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            transition: opacity 0.2s;
+        }
+
+        button.btn:hover { opacity: 0.9; }
+
+        button.btn-danger {
+            background-color: var(--minion);
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            width: auto;
+        }
+
+        .result-box {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #1a1a24;
+            border-radius: 5px;
+            text-align: center;
+            border-left: 5px solid var(--accent-color);
+        }
+
+        .result-box span {
+            font-size: 2rem;
+            font-weight: bold;
+            display: block;
+            color: var(--accent-color);
+        }
+
+        .player-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1a1a24;
+            padding: 8px 12px;
+            border-radius: 5px;
+            margin-bottom: 8px;
+            border: 1px solid #3d3d5c;
+            font-size: 0.9rem;
+        }
+
+        /* Columns Middle */
+        .middle-column {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+            align-content: start;
+        }
+
+        .role-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid #3d3d5c;
+        }
+
+        .role-header { margin-bottom: 10px; }
+        .role-name { font-weight: bold; font-size: 1.1rem; }
+        .role-title { font-size: 0.95rem; color: #d1d1e0; margin-top: 4px; }
+        
+        .badge { font-size: 0.70rem; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; font-weight: bold; display: inline-block; margin-top: 5px; }
+        .badge.townsfolk { background-color: var(--townsfolk); color: black; }
+        .badge.outsider { background-color: var(--outsider); color: white; }
+        .badge.minion { background-color: var(--minion); color: white; }
+        .badge.demon { background-color: var(--demon); color: white; }
+
+        .crops-box {
+            background-color: #161622;
+            border: 1px dashed #4d4d75;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .crops-box:hover { background-color: #1e1e30; border-color: var(--accent-color); }
+
+        .global-note-area {
+            width: 100%;
+            height: 400px;
+            background: #161622;
+            border: 1px solid #4d4d75;
+            color: #d1d1e0;
+            border-radius: 5px;
+            padding: 12px;
+            resize: vertical;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #2ecc71;
+            color: black;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: none;
+            z-index: 1000;
+        }
+        .rules-container {
+            font-size: 0.7em;
+        }
+    </style>
+</head>
+<body>
+    <div><a href="BOTC_CropsHelper.html">BOTC &quot;The Fete of Ravenswood Bluff&quot;</a></div>
+</body>
+</html>

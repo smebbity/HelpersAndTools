@@ -176,10 +176,26 @@
         function populateRoleDropdown() {
             const roleSelect = document.getElementById("player-role-select");
             roleSelect.innerHTML = "";
+            
+            const teamColors = {
+                townsfolk: "#2ecc71",
+                outsider: "#3498db",
+                minion: "#e74c3c",
+                demon: "#9b59b6"
+            };
+
             scriptData.forEach(role => {
                 let opt = document.createElement("option");
                 opt.value = role.id;
                 opt.textContent = `${role.name} (${role.team})`;
+                
+                // Style the option based on team
+                const team = role.team.toLowerCase();
+                if (teamColors[team]) {
+                    opt.style.backgroundColor = teamColors[team];
+                    opt.style.color = (team === 'townsfolk') ? '#1a1a24' : '#ffffff';
+                }
+                
                 roleSelect.appendChild(opt);
             });
         }

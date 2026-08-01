@@ -207,12 +207,8 @@
             gamePlayers.forEach(p => {
                 const row = document.createElement("div");
                 row.className = "player-row";
-                const iconPath = p.role.icon || 'default.webp';
                 row.innerHTML = `
                     <div style="display: flex; align-items: center; gap: 10px;">
-                        <img src="img_botc/${iconPath}" 
-                             onerror="this.src='https://placehold.co/30x30/252538/ffd700?text=?'" 
-                             style="width: 30px; height: 30px; border-radius: 4px; object-fit: cover;">
                         <span>${p.name} — <b>${p.role.name}</b></span>
                     </div>
                     <button class="btn btn-danger" onclick="deletePlayer(${p.uniqueId})">X</button>
@@ -221,8 +217,12 @@
 
                 const card = document.createElement("div");
                 card.className = "role-card";
+                const iconPath = p.role.icon || 'default.webp';
                 card.innerHTML = `
                     <div class="role-header">
+                        <img src="img_botc/${iconPath}" 
+                             onerror="this.src='https://placehold.co/30x30/252538/ffd700?text=?'" 
+                             style="width: 30px; height: 30px; border-radius: 4px; object-fit: cover;">
                         <div class="role-name">${p.name} - ${p.role.name}</div>
                         <span class="badge ${p.role.team}">${p.role.team}</span>
                     </div>

@@ -1,30 +1,13 @@
-[
-  {
-    "id": "_meta",
-    "author": "Gourdan Ramsay",
-    "name": "The Fete of Ravenswood Bluff"
-  },
-  "chef",
-  "innkeeper",
-  "tealady",
-  "sailor",
-  "cannibal",
-  "farmer",
-  "chambermaid",
-  "empath",
-  "towncrier",
-  "fortuneteller",
-  "undertaker",
-  "preacher",
-  "amnesiac",
-  "sweetheart",
-  "moonchild",
-  "plaguedoctor",
-  "saint",
-  "poisoner",
-  "goblin",
-  "marionette",
-  "witch",
-  "shabaloth",
-  "po"
+[{
+  "id":"_meta",
+  "author":"Gourdan Ramsay",
+  "name":"The Fete of Ravenswood Bluff"},
+    "chef","innkeeper","tealady","sailor",
+    "cannibal","farmer","chambermaid","empath",
+    "towncrier","fortuneteller","undertaker","preacher",
+    "amnesiac",
+    "sweetheart","moonchild","plaguedoctor","saint",
+    "poisoner","goblin","marionette","witch",
+    "shabaloth","po",
+    "bootlegger"
 ]
